@@ -75,7 +75,21 @@ public class AddressBookMain {
             System.out.println("Contact not found.");
         }
 
-        System.out.println("\nUpdated Contact List:");
+        System.out.println("\nContact List After Edit:");
+        addressBook.displayAllContacts();
+
+        System.out.print("\nEnter the first name of contact to delete: ");
+        String nameToDelete = scanner.nextLine();
+
+        boolean isDeleted = addressBook.deleteContactByFirstName(nameToDelete);
+
+        if (isDeleted) {
+            System.out.println("Contact deleted successfully.");
+        } else {
+            System.out.println("Contact not found.");
+        }
+
+        System.out.println("\nFinal Contact List:");
         addressBook.displayAllContacts();
 
         scanner.close();
