@@ -1,5 +1,4 @@
 
-
 public class ContactPerson {
     private String firstName;
     private String lastName;
