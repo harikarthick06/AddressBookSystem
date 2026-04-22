@@ -1,4 +1,5 @@
 
+
 import java.util.Scanner;
 
 public class AddressBookMain {
@@ -8,6 +9,7 @@ public class AddressBookMain {
 
         System.out.println("Welcome to Address Book Program");
 
+        System.out.println("\nEnter details for new contact:");
         System.out.print("Enter First Name: ");
         String firstName = scanner.nextLine();
 
@@ -35,7 +37,45 @@ public class AddressBookMain {
         ContactPerson person = new ContactPerson(firstName, lastName, address, city, state, zip, phoneNumber, email);
         addressBook.addContact(person);
 
-        System.out.println("\nContact Details:");
+        System.out.println("\nAll Contacts:");
+        addressBook.displayAllContacts();
+
+        System.out.print("\nEnter the first name of contact to edit: ");
+        String nameToEdit = scanner.nextLine();
+
+        ContactPerson existingContact = addressBook.findContactByFirstName(nameToEdit);
+
+        if (existingContact != null) {
+            System.out.println("Enter new details:");
+
+            System.out.print("Enter New Last Name: ");
+            String newLastName = scanner.nextLine();
+
+            System.out.print("Enter New Address: ");
+            String newAddress = scanner.nextLine();
+
+            System.out.print("Enter New City: ");
+            String newCity = scanner.nextLine();
+
+            System.out.print("Enter New State: ");
+            String newState = scanner.nextLine();
+
+            System.out.print("Enter New Zip: ");
+            String newZip = scanner.nextLine();
+
+            System.out.print("Enter New Phone Number: ");
+            String newPhoneNumber = scanner.nextLine();
+
+            System.out.print("Enter New Email: ");
+            String newEmail = scanner.nextLine();
+
+            existingContact.editContact(newLastName, newAddress, newCity, newState, newZip, newPhoneNumber, newEmail);
+            System.out.println("Contact updated successfully.");
+        } else {
+            System.out.println("Contact not found.");
+        }
+
+        System.out.println("\nUpdated Contact List:");
         addressBook.displayAllContacts();
 
         scanner.close();
