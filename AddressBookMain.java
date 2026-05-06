@@ -22,7 +22,9 @@ public class AddressBookMain {
             System.out.println("5. Search Person by State");
             System.out.println("6. View Persons by City");
             System.out.println("7. View Persons by State");
-            System.out.println("8. Exit");
+            System.out.println("8. Count Persons by City");
+            System.out.println("9. Count Persons by State");
+            System.out.println("10. Exit");
 
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
@@ -58,6 +60,14 @@ public class AddressBookMain {
                     break;
 
                 case 8:
+                    countPersonsByCity();
+                    break;
+
+                case 9:
+                    countPersonsByState();
+                    break;
+
+                case 10:
                     running = false;
                     System.out.println("Exiting Address Book Program.");
                     break;
@@ -176,7 +186,6 @@ public class AddressBookMain {
         }
     }
 
-    // UC9: View persons grouped by city
     private static void viewPersonsByCity() {
         Map<String, List<ContactPerson>> cityPersonMap = addressBookMap.values()
                 .stream()
@@ -194,7 +203,6 @@ public class AddressBookMain {
         });
     }
 
-    // UC9: View persons grouped by state
     private static void viewPersonsByState() {
         Map<String, List<ContactPerson>> statePersonMap = addressBookMap.values()
                 .stream()
@@ -210,5 +218,37 @@ public class AddressBookMain {
             System.out.println("\nState: " + state);
             contacts.forEach(System.out::println);
         });
+    }
+
+    // UC10: Count persons by city
+    private static void countPersonsByCity() {
+        Map<String, Long> cityCountMap = addressBookMap.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContactList().stream())
+                .collect(Collectors.groupingBy(ContactPerson::getCity, Collectors.counting()));
+
+        if (cityCountMap.isEmpty()) {
+            System.out.println("No contacts found.");
+            return;
+        }
+
+        cityCountMap.forEach((city, count) ->
+                System.out.println(city + " : " + count));
+    }
+
+    // UC10: Count persons by state
+    private static void countPersonsByState() {
+        Map<String, Long> stateCountMap = addressBookMap.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContactList().stream())
+                .collect(Collectors.groupingBy(ContactPerson::getState, Collectors.counting()));
+
+        if (stateCountMap.isEmpty()) {
+            System.out.println("No contacts found.");
+            return;
+        }
+
+        stateCountMap.forEach((state, count) ->
+                System.out.println(state + " : " + count));
     }
 }
