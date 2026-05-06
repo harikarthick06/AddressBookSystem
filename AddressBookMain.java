@@ -1,6 +1,8 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AddressBookMain {
     private static Scanner scanner = new Scanner(System.in);
@@ -16,7 +18,9 @@ public class AddressBookMain {
             System.out.println("1. Add Address Book");
             System.out.println("2. Add Contact");
             System.out.println("3. Display Contacts");
-            System.out.println("4. Exit");
+            System.out.println("4. Search Person by City");
+            System.out.println("5. Search Person by State");
+            System.out.println("6. Exit");
 
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
@@ -36,6 +40,14 @@ public class AddressBookMain {
                     break;
 
                 case 4:
+                    searchPersonByCity();
+                    break;
+
+                case 5:
+                    searchPersonByState();
+                    break;
+
+                case 6:
                     running = false;
                     System.out.println("Exiting Address Book Program.");
                     break;
@@ -118,5 +130,41 @@ public class AddressBookMain {
         }
 
         addressBook.displayContacts();
+    }
+
+    // UC8: Search person by city across multiple address books
+    private static void searchPersonByCity() {
+        System.out.print("Enter City: ");
+        String city = scanner.nextLine();
+
+        List<ContactPerson> result = addressBookMap.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContactList().stream())
+                .filter(contact -> contact.getCity().equalsIgnoreCase(city))
+                .collect(Collectors.toList());
+
+        if (result.isEmpty()) {
+            System.out.println("No contacts found in city: " + city);
+        } else {
+            result.forEach(System.out::println);
+        }
+    }
+
+    // UC8: Search person by state across multiple address books
+    private static void searchPersonByState() {
+        System.out.print("Enter State: ");
+        String state = scanner.nextLine();
+
+        List<ContactPerson> result = addressBookMap.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContactList().stream())
+                .filter(contact -> contact.getState().equalsIgnoreCase(state))
+                .collect(Collectors.toList());
+
+        if (result.isEmpty()) {
+            System.out.println("No contacts found in state: " + state);
+        } else {
+            result.forEach(System.out::println);
+        }
     }
 }
