@@ -5,8 +5,15 @@ public class AddressBook {
     private List<ContactPerson> contactList = new ArrayList<>();
 
     public void addContact(ContactPerson contactPerson) {
-        contactList.add(contactPerson);
-        System.out.println("Contact added successfully.");
+        boolean isDuplicate = contactList.stream()
+                .anyMatch(contact -> contact.equals(contactPerson));
+
+        if (isDuplicate) {
+            System.out.println("Duplicate contact found. Contact not added.");
+        } else {
+            contactList.add(contactPerson);
+            System.out.println("Contact added successfully.");
+        }
     }
 
     public void displayContacts() {

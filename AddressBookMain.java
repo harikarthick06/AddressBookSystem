@@ -20,7 +20,9 @@ public class AddressBookMain {
             System.out.println("3. Display Contacts");
             System.out.println("4. Search Person by City");
             System.out.println("5. Search Person by State");
-            System.out.println("6. Exit");
+            System.out.println("6. View Persons by City");
+            System.out.println("7. View Persons by State");
+            System.out.println("8. Exit");
 
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
@@ -48,6 +50,14 @@ public class AddressBookMain {
                     break;
 
                 case 6:
+                    viewPersonsByCity();
+                    break;
+
+                case 7:
+                    viewPersonsByState();
+                    break;
+
+                case 8:
                     running = false;
                     System.out.println("Exiting Address Book Program.");
                     break;
@@ -132,7 +142,6 @@ public class AddressBookMain {
         addressBook.displayContacts();
     }
 
-    // UC8: Search person by city across multiple address books
     private static void searchPersonByCity() {
         System.out.print("Enter City: ");
         String city = scanner.nextLine();
@@ -150,7 +159,6 @@ public class AddressBookMain {
         }
     }
 
-    // UC8: Search person by state across multiple address books
     private static void searchPersonByState() {
         System.out.print("Enter State: ");
         String state = scanner.nextLine();
@@ -166,5 +174,41 @@ public class AddressBookMain {
         } else {
             result.forEach(System.out::println);
         }
+    }
+
+    // UC9: View persons grouped by city
+    private static void viewPersonsByCity() {
+        Map<String, List<ContactPerson>> cityPersonMap = addressBookMap.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContactList().stream())
+                .collect(Collectors.groupingBy(ContactPerson::getCity));
+
+        if (cityPersonMap.isEmpty()) {
+            System.out.println("No contacts found.");
+            return;
+        }
+
+        cityPersonMap.forEach((city, contacts) -> {
+            System.out.println("\nCity: " + city);
+            contacts.forEach(System.out::println);
+        });
+    }
+
+    // UC9: View persons grouped by state
+    private static void viewPersonsByState() {
+        Map<String, List<ContactPerson>> statePersonMap = addressBookMap.values()
+                .stream()
+                .flatMap(addressBook -> addressBook.getContactList().stream())
+                .collect(Collectors.groupingBy(ContactPerson::getState));
+
+        if (statePersonMap.isEmpty()) {
+            System.out.println("No contacts found.");
+            return;
+        }
+
+        statePersonMap.forEach((state, contacts) -> {
+            System.out.println("\nState: " + state);
+            contacts.forEach(System.out::println);
+        });
     }
 }

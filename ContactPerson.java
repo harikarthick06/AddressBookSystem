@@ -47,6 +47,27 @@ public class ContactPerson {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof ContactPerson)) {
+            return false;
+        }
+
+        ContactPerson person = (ContactPerson) obj;
+
+        return firstName.equalsIgnoreCase(person.firstName)
+                && lastName.equalsIgnoreCase(person.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName.toLowerCase(), lastName.toLowerCase());
+    }
+
+    @Override
     public String toString() {
         return "Name: " + firstName + " " + lastName +
                 ", Address: " + address +
