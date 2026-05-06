@@ -1,45 +1,24 @@
-
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddressBook {
-    private ArrayList<ContactPerson> contacts;
+    private List<ContactPerson> contactList = new ArrayList<>();
 
-    public AddressBook() {
-        contacts = new ArrayList<>();
-    }
-
-    public void addContact(ContactPerson person) {
-        contacts.add(person);
+    public void addContact(ContactPerson contactPerson) {
+        contactList.add(contactPerson);
         System.out.println("Contact added successfully.");
     }
 
-    public void displayAllContacts() {
-        if (contacts.isEmpty()) {
+    public void displayContacts() {
+        if (contactList.isEmpty()) {
             System.out.println("No contacts found.");
             return;
         }
 
-        for (ContactPerson person : contacts) {
-            person.displayContact();
-        }
+        contactList.forEach(System.out::println);
     }
 
-    public ContactPerson findContactByFirstName(String firstName) {
-        for (ContactPerson person : contacts) {
-            if (person.getFirstName().equalsIgnoreCase(firstName)) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public boolean deleteContactByFirstName(String firstName) {
-        ContactPerson person = findContactByFirstName(firstName);
-        if (person != null) {
-            contacts.remove(person);
-            return true;
-        }
-        return false;
+    public List<ContactPerson> getContactList() {
+        return contactList;
     }
 }

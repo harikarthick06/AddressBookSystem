@@ -1,3 +1,4 @@
+import java.util.Objects;
 
 public class ContactPerson {
     private String firstName;
@@ -25,26 +26,34 @@ public class ContactPerson {
         return firstName;
     }
 
-    public void editContact(String lastName, String address, String city, String state,
-                            String zip, String phoneNumber, String email) {
-        this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void displayContact() {
-        System.out.println("First Name : " + firstName);
-        System.out.println("Last Name  : " + lastName);
-        System.out.println("Address    : " + address);
-        System.out.println("City       : " + city);
-        System.out.println("State      : " + state);
-        System.out.println("Zip        : " + zip);
-        System.out.println("Phone No   : " + phoneNumber);
-        System.out.println("Email      : " + email);
-        System.out.println("-----------------------------------");
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + firstName + " " + lastName +
+                ", Address: " + address +
+                ", City: " + city +
+                ", State: " + state +
+                ", Zip: " + zip +
+                ", Phone: " + phoneNumber +
+                ", Email: " + email;
     }
 }

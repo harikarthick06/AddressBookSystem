@@ -1,78 +1,122 @@
-
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookMain {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Map<String, AddressBook> addressBookMap = new HashMap<>();
+    private static Scanner scanner = new Scanner(System.in);
+    private static Map<String, AddressBook> addressBookMap = new HashMap<>();
 
+    public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program");
 
-        String addNewBookChoice;
+        boolean running = true;
 
-        do {
-            System.out.print("\nEnter Address Book Name: ");
-            String bookName = scanner.nextLine();
+        while (running) {
+            System.out.println("\nChoose Option:");
+            System.out.println("1. Add Address Book");
+            System.out.println("2. Add Contact");
+            System.out.println("3. Display Contacts");
+            System.out.println("4. Exit");
 
-            if (addressBookMap.containsKey(bookName)) {
-                System.out.println("Address Book with this name already exists.");
-            } else {
-                AddressBook addressBook = new AddressBook();
-                addressBookMap.put(bookName, addressBook);
-                System.out.println("Address Book '" + bookName + "' created successfully.");
+            System.out.print("Enter choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-                String addContactChoice;
-                do {
-                    System.out.println("\nEnter contact details for Address Book: " + bookName);
+            switch (choice) {
+                case 1:
+                    addAddressBook();
+                    break;
 
-                    System.out.print("Enter First Name: ");
-                    String firstName = scanner.nextLine();
+                case 2:
+                    addContact();
+                    break;
 
-                    System.out.print("Enter Last Name: ");
-                    String lastName = scanner.nextLine();
+                case 3:
+                    displayContacts();
+                    break;
 
-                    System.out.print("Enter Address: ");
-                    String address = scanner.nextLine();
+                case 4:
+                    running = false;
+                    System.out.println("Exiting Address Book Program.");
+                    break;
 
-                    System.out.print("Enter City: ");
-                    String city = scanner.nextLine();
-
-                    System.out.print("Enter State: ");
-                    String state = scanner.nextLine();
-
-                    System.out.print("Enter Zip: ");
-                    String zip = scanner.nextLine();
-
-                    System.out.print("Enter Phone Number: ");
-                    String phoneNumber = scanner.nextLine();
-
-                    System.out.print("Enter Email: ");
-                    String email = scanner.nextLine();
-
-                    ContactPerson person = new ContactPerson(firstName, lastName, address, city, state, zip, phoneNumber, email);
-                    addressBook.addContact(person);
-
-                    System.out.print("Do you want to add another contact to this Address Book? (yes/no): ");
-                    addContactChoice = scanner.nextLine();
-
-                } while (addContactChoice.equalsIgnoreCase("yes"));
+                default:
+                    System.out.println("Invalid choice.");
             }
+        }
+    }
 
-            System.out.print("\nDo you want to add another Address Book? (yes/no): ");
-            addNewBookChoice = scanner.nextLine();
+    private static void addAddressBook() {
+        System.out.print("Enter Address Book Name: ");
+        String bookName = scanner.nextLine();
 
-        } while (addNewBookChoice.equalsIgnoreCase("yes"));
+        if (addressBookMap.containsKey(bookName)) {
+            System.out.println("Address Book already exists.");
+        } else {
+            addressBookMap.put(bookName, new AddressBook());
+            System.out.println("Address Book added successfully.");
+        }
+    }
 
-        System.out.println("\nDisplaying All Address Books:");
+    private static AddressBook getAddressBookFromUser() {
+        System.out.print("Enter Address Book Name: ");
+        String bookName = scanner.nextLine();
 
-        for (Map.Entry<String, AddressBook> entry : addressBookMap.entrySet()) {
-            System.out.println("\nAddress Book Name: " + entry.getKey());
-            entry.getValue().displayAllContacts();
+        AddressBook addressBook = addressBookMap.get(bookName);
+
+        if (addressBook == null) {
+            System.out.println("Address Book not found.");
         }
 
-        scanner.close();
+        return addressBook;
+    }
+
+    private static void addContact() {
+        AddressBook addressBook = getAddressBookFromUser();
+
+        if (addressBook == null) {
+            return;
+        }
+
+        ContactPerson contactPerson = getContactDetails();
+        addressBook.addContact(contactPerson);
+    }
+
+    private static ContactPerson getContactDetails() {
+        System.out.print("Enter First Name: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("Enter Last Name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Enter Address: ");
+        String address = scanner.nextLine();
+
+        System.out.print("Enter City: ");
+        String city = scanner.nextLine();
+
+        System.out.print("Enter State: ");
+        String state = scanner.nextLine();
+
+        System.out.print("Enter Zip: ");
+        String zip = scanner.nextLine();
+
+        System.out.print("Enter Phone Number: ");
+        String phoneNumber = scanner.nextLine();
+
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+
+        return new ContactPerson(firstName, lastName, address, city, state, zip, phoneNumber, email);
+    }
+
+    private static void displayContacts() {
+        AddressBook addressBook = getAddressBookFromUser();
+
+        if (addressBook == null) {
+            return;
+        }
+
+        addressBook.displayContacts();
     }
 }
