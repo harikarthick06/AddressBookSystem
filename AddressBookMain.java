@@ -24,7 +24,11 @@ public class AddressBookMain {
             System.out.println("7. View Persons by State");
             System.out.println("8. Count Persons by City");
             System.out.println("9. Count Persons by State");
-            System.out.println("10. Exit");
+            System.out.println("10. Sort Contacts by Name");
+            System.out.println("11. Sort Contacts by City");
+            System.out.println("12. Sort Contacts by State");
+            System.out.println("13. Sort Contacts by Zip");
+            System.out.println("14. Exit");
 
             System.out.print("Enter choice: ");
             int choice = scanner.nextInt();
@@ -68,6 +72,22 @@ public class AddressBookMain {
                     break;
 
                 case 10:
+                    sortContactsByName();
+                    break;
+
+                case 11:
+                    sortContactsByCity();
+                    break;
+
+                case 12:
+                    sortContactsByState();
+                    break;
+
+                case 13:
+                    sortContactsByZip();
+                    break;
+
+                case 14:
                     running = false;
                     System.out.println("Exiting Address Book Program.");
                     break;
@@ -220,7 +240,6 @@ public class AddressBookMain {
         });
     }
 
-    // UC10: Count persons by city
     private static void countPersonsByCity() {
         Map<String, Long> cityCountMap = addressBookMap.values()
                 .stream()
@@ -236,7 +255,6 @@ public class AddressBookMain {
                 System.out.println(city + " : " + count));
     }
 
-    // UC10: Count persons by state
     private static void countPersonsByState() {
         Map<String, Long> stateCountMap = addressBookMap.values()
                 .stream()
@@ -250,5 +268,45 @@ public class AddressBookMain {
 
         stateCountMap.forEach((state, count) ->
                 System.out.println(state + " : " + count));
+    }
+
+    private static void sortContactsByName() {
+        AddressBook addressBook = getAddressBookFromUser();
+
+        if (addressBook == null) {
+            return;
+        }
+
+        addressBook.sortContactsByName();
+    }
+
+    private static void sortContactsByCity() {
+        AddressBook addressBook = getAddressBookFromUser();
+
+        if (addressBook == null) {
+            return;
+        }
+
+        addressBook.sortContactsByCity();
+    }
+
+    private static void sortContactsByState() {
+        AddressBook addressBook = getAddressBookFromUser();
+
+        if (addressBook == null) {
+            return;
+        }
+
+        addressBook.sortContactsByState();
+    }
+
+    private static void sortContactsByZip() {
+        AddressBook addressBook = getAddressBookFromUser();
+
+        if (addressBook == null) {
+            return;
+        }
+
+        addressBook.sortContactsByZip();
     }
 }
