@@ -1,0 +1,4 @@
+Contact{Name='Hari Karthick', City='Chennai', State='Tamil Nadu', Zip='600001', Phone='9876543210', Email='hari@gmail.com'}
+Contact{Name='Arun Kumar', City='Coimbatore', State='Tamil Nadu', Zip='641001', Phone='9876543211', Email='arun@gmail.com'}
+Contact{Name='Rahul Sharma', City='Bangalore', State='Karnataka', Zip='560001', Phone='9876543212', Email='rahul@gmail.com'}
+Contact{Name='Divya Raj', City='Chennai', State='Tamil Nadu', Zip='600040', Phone='9876543213', Email='divya@gmail.com'}

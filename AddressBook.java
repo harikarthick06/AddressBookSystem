@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -86,5 +87,31 @@ public class AddressBook {
 
     public void display(List<ContactPerson> contactList) {
         contactList.forEach(System.out::println);
+    }
+
+    // UC13 - Write contacts to file
+    public void writeDataToFile(String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (ContactPerson contact : contacts) {
+                writer.write(contact.toString());
+                writer.newLine();
+            }
+            System.out.println("Data written to file successfully.");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    // UC13 - Read contacts from file
+    public void readDataFromFile(String filePath) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            System.out.println("\nReading Contacts from File:");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading from file: " + e.getMessage());
+        }
     }
 }
