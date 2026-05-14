@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// UC14 - Added CSV File Read/Write functionality
+// UC14 - CSV File Read/Write
+// UC15 - JSON File Read/Write
 public class AddressBookMain {
 
     public static void main(String[] args) {
@@ -79,8 +80,7 @@ public class AddressBookMain {
         System.out.println("\nRead Data From File");
         addressBook.readDataFromFile("contacts.txt");
 
-        // UC14 - CSV Operations
-        // Build a Contact list from existing ContactPerson list for CSV/JSON use
+        // Build Contact list for CSV/JSON operations (UC14 & UC15)
         List<Contact> contactList = new ArrayList<>();
         contactList.add(new Contact("Hari", "Karthick", "12 Main Street", "Chennai", "Tamil Nadu", "600001", "9876543210", "hari@gmail.com"));
         contactList.add(new Contact("Arun", "Kumar", "45 Park Road", "Coimbatore", "Tamil Nadu", "641001", "9876543211", "arun@gmail.com"));
@@ -88,16 +88,20 @@ public class AddressBookMain {
         contactList.add(new Contact("Divya", "Raj", "22 Anna Nagar", "Chennai", "Tamil Nadu", "600040", "9876543213", "divya@gmail.com"));
 
         CSVService csvService = new CSVService();
+        JSONService jsonService = new JSONService();
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\n--- UC14: CSV File Operations ---");
+        System.out.println("\n--- UC14 & UC15: File Operations ---");
         System.out.println("1. Write Contacts to CSV File");
         System.out.println("2. Read Contacts from CSV File");
+        System.out.println("3. Write Contacts to JSON File");
+        System.out.println("4. Read Contacts from JSON File");
         System.out.print("Enter choice: ");
         int choice = scanner.nextInt();
 
         switch (choice) {
+
             case 1:
                 csvService.writeContactsToCSV(contactList);
                 break;
@@ -105,6 +109,15 @@ public class AddressBookMain {
             case 2:
                 List<Contact> csvContacts = csvService.readContactsFromCSV();
                 csvContacts.forEach(System.out::println);
+                break;
+
+            case 3:
+                jsonService.writeContactsToJSON(contactList);
+                break;
+
+            case 4:
+                List<Contact> jsonContacts = jsonService.readContactsFromJSON();
+                jsonContacts.forEach(System.out::println);
                 break;
 
             default:
